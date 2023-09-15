@@ -16,13 +16,16 @@
     </div>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item nav-profile dropdown">
-        <a class="nav-link " id="profileDropdown" href="" >
+        <a class="nav-link " id="profileDropdown" href="{{ route('admin.edit') }}" >
+          @foreach($adminData as $data)
+            
+          @endforeach
           <div class="nav-profile-img">
-            <img src="{{ URL::to('/') }}/assets/images/faces/face1.jpg" alt="image">
+            <img src="{{ URL::to('/') }}/images/admin/{{ $data->admin_profile }}" alt="image">
             
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">Neel pandya</p>
+            <p class="mb-1 text-black">{{ $data->admin_name }}</p>
           </div>
         </a>
        

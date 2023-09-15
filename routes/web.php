@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::prefix('admin')->group(function () {
     Route::view('admin_login', 'admin_login')
         ->name('admin.login')
@@ -73,7 +77,9 @@ Route::prefix('admin')->group(function () {
             Route::post('update', [AdminController::class, 'service_update'])->name('services.update');
             Route::get('purchased', [AdminController::class, 'service_purchased'])->name('service.purchased');
         });
+        Route::get('edit', [AdminController::class, 'admin_edit'])->name('admin.edit');
+        Route::post('update', [AdminController::class, 'admin_update'])->name('admin.update');
+        Route::get('change_password', [AdminController::class, 'admin_change_password'])->name('admin.change.password');
+        Route::get('change_password_validate', [AdminController::class, 'admin_change_password_validate'])->name('admin.change.password.validate');
     });
-
-
 });
