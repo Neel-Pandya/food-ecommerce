@@ -133,7 +133,9 @@ class AdminController extends Controller
     {
         $user_email = User::where('email', '=', $email)->first();
         if ($user_email) {
-            return view('blueprint.user_edit')->with(compact('user_email'));
+            $adminData = DB::table('admin')->get();
+
+            return view('blueprint.user_edit')->with(compact('user_email', 'adminData'));
         } else {
             session()->flash('Error', 'There is no user as ' . $email);
             return redirect()->route('users');
@@ -290,7 +292,8 @@ class AdminController extends Controller
             ->where('category_name', '=', $name)
             ->first();
         if ($category) {
-            return view('blueprint.category_edit', compact('category'));
+            $adminData = DB::table('admin')->get();
+            return view('blueprint.category_edit', compact('category', 'adminData'));
         } else {
             session()->flash('Error', "Category named $name not found");
             return redirect()->route('category');
@@ -314,8 +317,8 @@ class AdminController extends Controller
     public function product_add()
     {
         $category = DB::table('category')->get();
-        $item_type = DB::table('item_type')->get();
-        return view('blueprint.product_add', compact('category', 'item_type'));
+        $adminData = DB::table('admin')->get();
+        return view('blueprint.product_add', compact('category', 'adminData'));
     }
     public function products_store(Request $request)
     {
@@ -324,7 +327,6 @@ class AdminController extends Controller
                 'item_name' => 'required|alpha',
                 'item_price' => 'required|numeric',
                 'item_category' => 'required',
-                'item_type' => 'required',
                 'item_image' => 'required|mimes:png,jpg,jpeg,avif',
             ],
             [
@@ -335,7 +337,6 @@ class AdminController extends Controller
                 'item_image.required' => 'This Field is required',
                 'item_category.required' => 'This Field is required',
                 'item_image.mimes' => 'Only png , jpg , jpeg , avif format is allowed ',
-                'item_type.required' => 'This Field is required',
             ],
         );
 
@@ -346,7 +347,6 @@ class AdminController extends Controller
             'item_price' => $request->item_price,
             'item_category' => $request->item_category,
             'item_status' => 'Active',
-            'item_type' => $request->item_type,
             'item_image' => $imageOriginalName,
             'created_at' => now(),
             'updated_at' => now(),
@@ -434,6 +434,7 @@ class AdminController extends Controller
 
     public function products_edit(string $item_name)
     {
+        $adminData = DB::table('admin')->get();
         $item = DB::table('items')
             ->where('item_name', '=', $item_name)
             ->first();
@@ -441,13 +442,9 @@ class AdminController extends Controller
             ->join('items', 'items.item_category', '<>', 'category.category_name')
             ->where('item_name', '=', $item_name)
             ->get();
-        $item_type = DB::table('item_type')
-            ->join('items', 'item_type.Item_type', '<>', 'items.item_type')
-            ->where('item_name', $item_name)
-            ->get();
 
-        if ($item and $item_category and $item_type) {
-            return view('blueprint.products_edit', compact('item', 'item_category', 'item_type'));
+        if ($item and $item_category) {
+            return view('blueprint.products_edit', compact('item', 'item_category', 'adminData'));
         } else {
             session()->flash('Error', "There is not item like $item_name");
             return redirect()->route('products.available');
@@ -461,7 +458,6 @@ class AdminController extends Controller
                 'item_name' => 'required|alpha',
                 'item_price' => 'required|numeric',
                 'item_category' => 'required',
-                'item_type' => 'required',
                 'item_image' => 'mimes:png,jpg,jpeg,avif',
             ],
             [
@@ -470,7 +466,6 @@ class AdminController extends Controller
                 'item_price.required' => 'This Field is required',
                 'item_price.numeric' => 'Only Numeric values are allowed',
                 'item_category.required' => 'This Field is required',
-                'item_type' => 'This Field is required',
                 'item_image.mimes' => 'Only png , jpg , jpeg , avif format is allowed ',
             ],
         );
@@ -483,7 +478,7 @@ class AdminController extends Controller
             }
             $updatedQuery = DB::table('items')
                 ->where('item_name', '=', $request->item_name)
-                ->update(['item_name' => $request->item_name, 'item_price' => $request->item_price, 'item_category' => $request->item_category, 'item_image' => $fileOriginalName, 'item_type' => $request->item_type]);
+                ->update(['item_name' => $request->item_name, 'item_price' => $request->item_price, 'item_category' => $request->item_category, 'item_image' => $fileOriginalName]);
             if ($updatedQuery) {
                 $request->item_image->move(public_path('Images/Profiles/'), $fileOriginalName);
                 session()->flash('Success', 'Data Updated successfully');
@@ -493,7 +488,7 @@ class AdminController extends Controller
         } else {
             $update = DB::table('items')
                 ->where('item_name', '=', $request->item_name)
-                ->update(['item_name' => $request->item_name, 'item_price' => $request->item_price, 'item_category' => $request->item_category, 'item_type' => $request->item_type]);
+                ->update(['item_name' => $request->item_name, 'item_price' => $request->item_price, 'item_category' => $request->item_category]);
             if ($update) {
                 session()->flash('Success', 'Data Updated successfully');
             } else {
@@ -513,7 +508,7 @@ class AdminController extends Controller
     public function add_services()
     {
         $adminData = DB::table('admin')->get();
-        return view('blueprint.AddService', 'adminData');
+        return view('blueprint.AddService', compact('adminData'));
     }
 
     public function services_store(Request $request)
@@ -620,7 +615,8 @@ class AdminController extends Controller
         $services = DB::table('services')
             ->where('Service_name', $service_name)
             ->first();
-        return $services ? view('blueprint.EditService', compact('services')) : redirect()->route('services.available');
+        $adminData = DB::table('admin')->get();
+        return $services ? view('blueprint.EditService', compact('services', 'adminData')) : redirect()->route('services.available');
     }
 
     public function service_update(Request $request)

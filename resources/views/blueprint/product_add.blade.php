@@ -54,21 +54,8 @@ Items add
 
                     </div>
 
-                    <div class="col-sm-12 col-lg-6 col-md-6 mt-4">
-                        <label for="" class="form-label">Select Item Type</label>
-                        <select name="item_type" id="" class="form-select">
-                            <option value="">Choose item type</option>
-                            @foreach ($item_type as $item )
-                                    <option value="{{ $item->Item_type }}">{{ $item->Item_type }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">
-                            @error('item_type')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 mt-4">
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-6 mt-4">
                         <label for="" class="form-label">Choose Image</label>
                         <input type="file" name="item_image" id="" class="form-control">
                         <span class="text-danger">

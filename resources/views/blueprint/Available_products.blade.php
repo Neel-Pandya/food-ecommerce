@@ -46,7 +46,6 @@ Available Product
                 <th>Item Name</th>
                 <th>Item Price</th>
                 <th>Item Category</th>
-                <th>Item Type</th>
                 <th>Item status</th>
                 <th>Item Image</th>
                 <th colspan="2">Actions</th>
@@ -59,7 +58,6 @@ Available Product
                     <td>{{ $item->item_name }}</td>
                     <td>{{ $item->item_price }} Rs</td>
                     <td>{{ $item->item_category }}</td>
-                    <td>{{ $item->item_type }}</td>
                     @if($item->item_status == "Active")
                     <td><a href="{{ route('products.deactivate', ['item_name' => $item->item_name]) }}"><button
                                 class="btn btn-danger btn-sm">Deactivate</button></a></td>
