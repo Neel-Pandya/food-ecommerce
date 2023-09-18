@@ -72,6 +72,11 @@
                 <i class="mdi mdi-key menu-icon"></i></a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('gallery.create') }}" class="nav-link"><span class="menu title">Gallery</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+</li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}">

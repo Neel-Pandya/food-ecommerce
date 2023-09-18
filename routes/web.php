@@ -77,6 +77,17 @@ Route::prefix('admin')->group(function () {
             Route::post('update', [AdminController::class, 'service_update'])->name('services.update');
             Route::get('purchased', [AdminController::class, 'service_purchased'])->name('service.purchased');
         });
+        Route::prefix('gallery')->group(function () {
+            Route::get('available', [AdminController::class, 'gallery_create'])->name('gallery.create');
+            Route::get('add', [AdminController::class, 'gallery_add'])->name('gallery.add');
+            Route::post('store', [AdminController::class, 'gallery_store'])->name('gallery.store');
+            Route::get('edit/{id}', [AdminController::class, 'gallery_edit'])->name('gallery.edit');
+            Route::get('activate/{id}', [AdminController::class, 'gallery_activate'])->name('gallery.activate');
+            Route::get('deactivate/{id}', [AdminController::class, 'gallery_deactivate'])->name('gallery.deactivate');
+            Route::get('delete/{id}', [AdminController::class, 'gallery_delete'])->name('gallery.delete');
+            Route::get('reactivate/{id}', [AdminController::class, 'gallery_reactivate'])->name('gallery.reactivate');
+            Route::post('update', [AdminController::class, 'gallery_update'])->name('gallery.update');
+        });
         Route::get('edit', [AdminController::class, 'admin_edit'])->name('admin.edit');
         Route::post('update', [AdminController::class, 'admin_update'])->name('admin.update');
         Route::get('change_password', [AdminController::class, 'admin_change_password'])->name('admin.change.password');

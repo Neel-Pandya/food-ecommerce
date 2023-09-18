@@ -52,4 +52,10 @@ class LoginController extends Controller
             return redirect()->back()->with('Error', 'Invalid Credentials');
         }
     }
+    public function logout()
+    {
+        session()->forget('user_email');
+        session()->forget('user_password');
+        return redirect()->route('guest.login');
+    }
 }

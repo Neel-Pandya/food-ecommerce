@@ -32,7 +32,7 @@ Users
 
     @endif
 
-    <div class="table-responsive-lg table-responsive-md ">
+    <div class="table-responsive ">
         <table class="table table-striped table-hover ">
             <caption>
                 <!-- Button trigger modal -->

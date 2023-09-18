@@ -24,55 +24,60 @@
       </section><!-- End Hero Section -->
 
       <main id="main">
+          @if (session()->has('user_email') and session()->has('user_password'))
+          @else
+              <!-- ======= About Section ======= -->
+              <section id="about" class="about">
+                  <div class="container" data-aos="fade-up">
 
-          <!-- ======= About Section ======= -->
-          <section id="about" class="about">
-              <div class="container" data-aos="fade-up">
-
-                  <div class="section-header">
-                      <h2>About Us</h2>
-                      <p>Learn More <span>About Us</span></p>
-                  </div>
-
-                  <div class="row gy-4">
-                      <div class="col-lg-7 position-relative about-img"
-                          style="background-image: url(assets/img/about.jpg) ;" data-aos="fade-up" data-aos-delay="150">
-                          
+                      <div class="section-header">
+                          <h2>About Us</h2>
+                          <p>Learn More <span>About Us</span></p>
                       </div>
-                      <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
-                          <div class="content ps-0 ps-lg-5">
-                              <p class="fst-italic">
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                  ut labore et dolore
-                                  magna aliqua.
-                              </p>
-                              <ul>
-                                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                                      consequat.</li>
-                                  <li><i class="bi bi-check2-all"></i> Duis aute irure dolor in reprehenderit in voluptate
-                                      velit.</li>
-                                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                                      consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda
-                                      mastiro dolore eu fugiat nulla pariatur.</li>
-                              </ul>
-                              <p>
-                                  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                  reprehenderit in voluptate
-                                  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                  proident
-                              </p>
 
-                              <div class="position-relative mt-4">
-                                  <img src="assets/img/about-2.jpg" class="img-fluid" alt="">
-                                  <a href="https://www.youtube.com/watch?v=yGc-1UFgvWc" class="glightbox play-btn"></a>
+                      <div class="row gy-4">
+                          <div class="col-lg-7 position-relative about-img"
+                              style="background-image: url(assets/img/about.jpg) ;" data-aos="fade-up" data-aos-delay="150">
+
+                          </div>
+                          <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
+                              <div class="content ps-0 ps-lg-5">
+                                  <p class="fst-italic">
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                      incididunt
+                                      ut labore et dolore
+                                      magna aliqua.
+                                  </p>
+                                  <ul>
+                                      <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo
+                                          consequat.</li>
+                                      <li><i class="bi bi-check2-all"></i> Duis aute irure dolor in reprehenderit in
+                                          voluptate
+                                          velit.</li>
+                                      <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo
+                                          consequat. Duis aute irure dolor in reprehenderit in voluptate trideta
+                                          storacalaperda
+                                          mastiro dolore eu fugiat nulla pariatur.</li>
+                                  </ul>
+                                  <p>
+                                      Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                      reprehenderit in voluptate
+                                      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                      non
+                                      proident
+                                  </p>
+
+                                  <div class="position-relative mt-4">
+                                      <img src="assets/img/about-2.jpg" class="img-fluid" alt="">
+                                      <a href="https://www.youtube.com/watch?v=yGc-1UFgvWc" class="glightbox play-btn"></a>
+                                  </div>
                               </div>
                           </div>
                       </div>
+
                   </div>
-
-              </div>
-          </section><!-- End About Section -->
-
+              </section><!-- End About Section -->
+          @endif
           <!-- ======= Why Us Section ======= -->
           <section id="why-us" class="why-us section-bg">
               <div class="container" data-aos="fade-up">
@@ -139,16 +144,16 @@
 
                       <div class="col-lg-3 col-md-6">
                           <div class="stats-item text-center w-100 h-100">
-                              <span data-purecounter-start="0" data-purecounter-end="{{ $countUsers }}" data-purecounter-duration="1"
-                                  class="purecounter"></span>
+                              <span data-purecounter-start="0" data-purecounter-end="{{ $countUsers }}"
+                                  data-purecounter-duration="1" class="purecounter"></span>
                               <p>Total Customers</p>
                           </div>
                       </div><!-- End Stats Item -->
 
                       <div class="col-lg-3 col-md-6">
                           <div class="stats-item text-center w-100 h-100">
-                              <span data-purecounter-start="0" data-purecounter-end="{{ $countItems }}" data-purecounter-duration="1"
-                                  class="purecounter"></span>
+                              <span data-purecounter-start="0" data-purecounter-end="{{ $countItems }}"
+                                  data-purecounter-duration="1" class="purecounter"></span>
                               <p>Items</p>
                           </div>
                       </div><!-- End Stats Item -->
@@ -216,7 +221,7 @@
 
                           <div class="row gy-5">
                               @forelse($itemData as $data)
-                                  @if ($data->item_category == 'Fast Food')
+                                  @if ($data->item_category == 'Fast Food' and $data->item_status == 'Active')
                                       <div class="col-lg-4 menu-item">
                                           <a href="{{ URL::to('/') }}/Images/Profiles/{{ $data->item_image }}"
                                               class="glightbox"><img
@@ -227,6 +232,9 @@
                                           <p class="price">
                                               {{ $data->item_price }} Rs.
                                           </p>
+                                          @if(session()->has('user_email') and session()->has('user_password'))
+                                                <button class="btn btn-primary" style="background-color:#ce1212;  border: none; ">Add to Cart</button>
+                                          @endif
                                       </div><!-- Menu Item -->
                                   @endif
                               @empty
@@ -245,14 +253,14 @@
                           <div class="row gy-5">
 
                               @forelse($itemData as $item)
-                                  @if ($item->item_category == 'Cold Drinks')
+                                  @if ($item->item_category == 'Cold Drinks' and $item->item_status == 'Active')
                                       <div class="col-lg-4 menu-item">
                                           <a href="{{ URL::to('/') }}/Images/Profiles/{{ $item->item_image }}"
                                               class="glightbox"><img
                                                   src="{{ URL::to('/') }}/Images/Profiles/{{ $item->item_image }}"
                                                   class="menu-img img-fluid" alt=""></a>
                                           <h4>{{ $item->item_name }}</h4>
-                                          
+
                                           <p class="price">
                                               {{ $item->item_price }} Rs.
                                           </p>
@@ -274,7 +282,7 @@
 
                           <div class="row gy-5">
                               @forelse($itemData as $item)
-                                  @if ($item->item_category == 'Sweets')
+                                  @if ($item->item_category == 'Sweets' and $item->item_status == 'Active')
                                       <div class="col-lg-4 menu-item">
                                           <a href="{{ URL::to('/') }}/Images/Profiles/{{ $item->item_image }}"
                                               class="glightbox"><img
@@ -389,140 +397,147 @@
           </section><!-- End Menu Section -->
 
           <!-- ======= Testimonials Section ======= -->
-          <section id="testimonials" class="testimonials section-bg">
-              <div class="container" data-aos="fade-up">
+          @if (session()->has('user_email') and session()->has('user_password'))
+          @else
+              <section id="testimonials" class="testimonials section-bg">
+                  <div class="container" data-aos="fade-up">
 
-                  <div class="section-header">
-                      <h2>Testimonials</h2>
-                      <p>What Are They <span>Saying About Us</span></p>
-                  </div>
-
-                  <div class="slides-1 swiper" data-aos="fade-up" data-aos-delay="100">
-                      <div class="swiper-wrapper">
-
-                          <div class="swiper-slide">
-                              <div class="testimonial-item">
-                                  <div class="row gy-4 justify-content-center">
-                                      <div class="col-lg-6">
-                                          <div class="testimonial-content">
-                                              <p>
-                                                  <i class="bi bi-quote quote-icon-left"></i>
-                                                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum
-                                                  suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh
-                                                  et. Maecen aliquam, risus at semper.
-                                                  <i class="bi bi-quote quote-icon-right"></i>
-                                              </p>
-                                              <h3>Saul Goodman</h3>
-                                              <h4>Ceo &amp; Founder</h4>
-                                              <div class="stars">
-                                                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-2 text-center">
-                                          <img src="assets/img/testimonials/testimonials-1.jpg"
-                                              class="img-fluid testimonial-img" alt="">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div><!-- End testimonial item -->
-
-                          <div class="swiper-slide">
-                              <div class="testimonial-item">
-                                  <div class="row gy-4 justify-content-center">
-                                      <div class="col-lg-6">
-                                          <div class="testimonial-content">
-                                              <p>
-                                                  <i class="bi bi-quote quote-icon-left"></i>
-                                                  Export tempor illum tamen malis malis eram quae irure esse labore quem
-                                                  cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua
-                                                  noster fugiat irure amet legam anim culpa.
-                                                  <i class="bi bi-quote quote-icon-right"></i>
-                                              </p>
-                                              <h3>Sara Wilsson</h3>
-                                              <h4>Designer</h4>
-                                              <div class="stars">
-                                                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-2 text-center">
-                                          <img src="assets/img/testimonials/testimonials-2.jpg"
-                                              class="img-fluid testimonial-img" alt="">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div><!-- End testimonial item -->
-
-                          <div class="swiper-slide">
-                              <div class="testimonial-item">
-                                  <div class="row gy-4 justify-content-center">
-                                      <div class="col-lg-6">
-                                          <div class="testimonial-content">
-                                              <p>
-                                                  <i class="bi bi-quote quote-icon-left"></i>
-                                                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla
-                                                  quem veniam duis minim tempor labore quem eram duis noster aute amet eram
-                                                  fore quis sint minim.
-                                                  <i class="bi bi-quote quote-icon-right"></i>
-                                              </p>
-                                              <h3>Jena Karlis</h3>
-                                              <h4>Store Owner</h4>
-                                              <div class="stars">
-                                                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-2 text-center">
-                                          <img src="assets/img/testimonials/testimonials-3.jpg"
-                                              class="img-fluid testimonial-img" alt="">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div><!-- End testimonial item -->
-
-                          <div class="swiper-slide">
-                              <div class="testimonial-item">
-                                  <div class="row gy-4 justify-content-center">
-                                      <div class="col-lg-6">
-                                          <div class="testimonial-content">
-                                              <p>
-                                                  <i class="bi bi-quote quote-icon-left"></i>
-                                                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam
-                                                  tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum
-                                                  fugiat legam esse veniam culpa fore nisi cillum quid.
-                                                  <i class="bi bi-quote quote-icon-right"></i>
-                                              </p>
-                                              <h3>John Larson</h3>
-                                              <h4>Entrepreneur</h4>
-                                              <div class="stars">
-                                                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                                      class="bi bi-star-fill"></i>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-2 text-center">
-                                          <img src="assets/img/testimonials/testimonials-4.jpg"
-                                              class="img-fluid testimonial-img" alt="">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div><!-- End testimonial item -->
-
+                      <div class="section-header">
+                          <h2>Testimonials</h2>
+                          <p>What Are They <span>Saying About Us</span></p>
                       </div>
-                      <div class="swiper-pagination"></div>
+
+                      <div class="slides-1 swiper" data-aos="fade-up" data-aos-delay="100">
+                          <div class="swiper-wrapper">
+
+                              <div class="swiper-slide">
+                                  <div class="testimonial-item">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-6">
+                                              <div class="testimonial-content">
+                                                  <p>
+                                                      <i class="bi bi-quote quote-icon-left"></i>
+                                                      Proin iaculis purus consequat sem cure digni ssim donec porttitora
+                                                      entum
+                                                      suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget
+                                                      nibh
+                                                      et. Maecen aliquam, risus at semper.
+                                                      <i class="bi bi-quote quote-icon-right"></i>
+                                                  </p>
+                                                  <h3>Saul Goodman</h3>
+                                                  <h4>Ceo &amp; Founder</h4>
+                                                  <div class="stars">
+                                                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2 text-center">
+                                              <img src="assets/img/testimonials/testimonials-1.jpg"
+                                                  class="img-fluid testimonial-img" alt="">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div><!-- End testimonial item -->
+
+                              <div class="swiper-slide">
+                                  <div class="testimonial-item">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-6">
+                                              <div class="testimonial-content">
+                                                  <p>
+                                                      <i class="bi bi-quote quote-icon-left"></i>
+                                                      Export tempor illum tamen malis malis eram quae irure esse labore quem
+                                                      cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua
+                                                      noster fugiat irure amet legam anim culpa.
+                                                      <i class="bi bi-quote quote-icon-right"></i>
+                                                  </p>
+                                                  <h3>Sara Wilsson</h3>
+                                                  <h4>Designer</h4>
+                                                  <div class="stars">
+                                                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2 text-center">
+                                              <img src="assets/img/testimonials/testimonials-2.jpg"
+                                                  class="img-fluid testimonial-img" alt="">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div><!-- End testimonial item -->
+
+                              <div class="swiper-slide">
+                                  <div class="testimonial-item">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-6">
+                                              <div class="testimonial-content">
+                                                  <p>
+                                                      <i class="bi bi-quote quote-icon-left"></i>
+                                                      Enim nisi quem export duis labore cillum quae magna enim sint quorum
+                                                      nulla
+                                                      quem veniam duis minim tempor labore quem eram duis noster aute amet
+                                                      eram
+                                                      fore quis sint minim.
+                                                      <i class="bi bi-quote quote-icon-right"></i>
+                                                  </p>
+                                                  <h3>Jena Karlis</h3>
+                                                  <h4>Store Owner</h4>
+                                                  <div class="stars">
+                                                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2 text-center">
+                                              <img src="assets/img/testimonials/testimonials-3.jpg"
+                                                  class="img-fluid testimonial-img" alt="">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div><!-- End testimonial item -->
+
+                              <div class="swiper-slide">
+                                  <div class="testimonial-item">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-6">
+                                              <div class="testimonial-content">
+                                                  <p>
+                                                      <i class="bi bi-quote quote-icon-left"></i>
+                                                      Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam
+                                                      tempor noster veniam enim culpa labore duis sunt culpa nulla illum
+                                                      cillum
+                                                      fugiat legam esse veniam culpa fore nisi cillum quid.
+                                                      <i class="bi bi-quote quote-icon-right"></i>
+                                                  </p>
+                                                  <h3>John Larson</h3>
+                                                  <h4>Entrepreneur</h4>
+                                                  <div class="stars">
+                                                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                          class="bi bi-star-fill"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-2 text-center">
+                                              <img src="assets/img/testimonials/testimonials-4.jpg"
+                                                  class="img-fluid testimonial-img" alt="">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div><!-- End testimonial item -->
+
+                          </div>
+                          <div class="swiper-pagination"></div>
+                      </div>
+
                   </div>
-
-              </div>
-          </section><!-- End Testimonials Section -->
-
+              </section><!-- End Testimonials Section -->
+          @endif
           <!-- ======= Events Section ======= -->
 
           <!-- ======= Chefs Section ======= -->
@@ -601,80 +616,6 @@
               </div>
           </section><!-- End Chefs Section -->
 
-          <!-- ======= Book A Table Section ======= -->
-          <section id="book-a-table" class="book-a-table">
-              <div class="container" data-aos="fade-up">
-
-                  <div class="section-header">
-                      <h2>Book A Table</h2>
-                      <p>Book <span>Your Stay</span> With Us</p>
-                  </div>
-
-                  <div class="row g-0">
-
-                      <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/reservation.jpg);"
-                          data-aos="zoom-out" data-aos-delay="200"></div>
-
-                      <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                          <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form"
-                              data-aos="fade-up" data-aos-delay="100">
-                              <div class="row gy-4">
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="text" name="name" class="form-control" id="name"
-                                          placeholder="Your Name" data-rule="minlen:4"
-                                          data-msg="Please enter at least 4 chars">
-                                      <div class="validate"></div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="email" class="form-control" name="email" id="email"
-                                          placeholder="Your Email" data-rule="email"
-                                          data-msg="Please enter a valid email">
-                                      <div class="validate"></div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="text" class="form-control" name="phone" id="phone"
-                                          placeholder="Your Phone" data-rule="minlen:4"
-                                          data-msg="Please enter at least 4 chars">
-                                      <div class="validate"></div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="text" name="date" class="form-control" id="date"
-                                          placeholder="Date" data-rule="minlen:4"
-                                          data-msg="Please enter at least 4 chars">
-                                      <div class="validate"></div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="text" class="form-control" name="time" id="time"
-                                          placeholder="Time" data-rule="minlen:4"
-                                          data-msg="Please enter at least 4 chars">
-                                      <div class="validate"></div>
-                                  </div>
-                                  <div class="col-lg-4 col-md-6">
-                                      <input type="number" class="form-control" name="people" id="people"
-                                          placeholder="# of people" data-rule="minlen:1"
-                                          data-msg="Please enter at least 1 chars">
-                                      <div class="validate"></div>
-                                  </div>
-                              </div>
-                              <div class="form-group mt-3">
-                                  <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                                  <div class="validate"></div>
-                              </div>
-                              <div class="mb-3">
-                                  <div class="loading">Loading</div>
-                                  <div class="error-message"></div>
-                                  <div class="sent-message">Your booking request was sent. We will call back or send an
-                                      Email to confirm your reservation. Thank you!</div>
-                              </div>
-                              <div class="text-center"><button type="submit">Book a Table</button></div>
-                          </form>
-                      </div><!-- End Reservation Form -->
-
-                  </div>
-
-              </div>
-          </section><!-- End Book A Table Section -->
-
           <!-- ======= Gallery Section ======= -->
           <section id="gallery" class="gallery section-bg">
               <div class="container" data-aos="fade-up">
@@ -686,30 +627,13 @@
 
                   <div class="gallery-slider swiper">
                       <div class="swiper-wrapper align-items-center">
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-1.jpg"><img src="assets/img/gallery/gallery-1.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-2.jpg"><img src="assets/img/gallery/gallery-2.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-3.jpg"><img src="assets/img/gallery/gallery-3.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-4.jpg"><img src="assets/img/gallery/gallery-4.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-5.jpg"><img src="assets/img/gallery/gallery-5.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-6.jpg"><img src="assets/img/gallery/gallery-6.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-7.jpg"><img src="assets/img/gallery/gallery-7.jpg"
-                                      class="img-fluid" alt=""></a></div>
-                          <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
-                                  href="assets/img/gallery/gallery-8.jpg"><img src="assets/img/gallery/gallery-8.jpg"
-                                      class="img-fluid" alt=""></a></div>
+                          @foreach ($galleryData as $gallery)
+                              <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
+                                      href="{{ URL::to('/') }}/Images/gallery/{{ $gallery->image }}"><img
+                                          src="{{ URL::to('/') }}/Images/gallery/{{ $gallery->image }}"
+                                          class="img-fluid" alt=""></a></div>
+                          @endforeach
+
                       </div>
                       <div class="swiper-pagination"></div>
                   </div>

@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>meet Ganagdiya</title>
+    <title>Food Ecommerce
+    </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -47,7 +48,10 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a href="{{ URL::to('/') }}/#hero">Home</a></li>
-                    <li><a href="{{ URL::to('/') }}/#about">About</a></li>
+                    @if (session()->has('user_email') and session()->has('user_password'))
+                    @else
+                        <li><a href="{{ URL::to('/') }}/#about">About</a></li>
+                    @endif
                     <li><a href="{{ URL::to('/') }}/#menu">Menu</a></li>
                     <li><a href="{{ URL::to('/') }}/#chefs">Chefs</a></li>
                     <li><a href="{{ URL::to('/') }}/#gallery">Gallery</a></li>

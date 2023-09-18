@@ -19,7 +19,7 @@ class UserController extends Controller
         $countItems = Database::table('items')
             ->where('item_status', 'Active')
             ->count('id');
-
-        return view('welcome', compact('itemData', 'countUsers', 'countItems'));
+        $galleryData = Database::table('gallery')->where('status', 'Active')->get();
+        return view('welcome', compact('itemData', 'countUsers', 'countItems', 'galleryData'));
     }
 }

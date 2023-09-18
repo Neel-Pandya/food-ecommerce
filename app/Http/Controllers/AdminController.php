@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use PDO;
 
 class AdminController extends Controller
@@ -737,5 +738,149 @@ class AdminController extends Controller
             'new_pass' => 'required|confirmed',
             'new_pass_confirmation' => 'required',
         ]);
+    }
+
+    public function gallery_create()
+    {
+        $adminData = DB::table('admin')->get();
+        $activeImage = DB::table('gallery')->get();
+
+        return view('blueprint.gallery', compact('adminData', 'activeImage'));
+    }
+    public function gallery_add()
+    {
+        $adminData = DB::table('admin')->get();
+
+        return view('blueprint.add_gallery', compact('adminData'));
+    }
+    public function gallery_store(Request $request)
+    {
+        $request->validate(
+            [
+                'profile' => 'required',
+            ],
+            [
+                'profile.required' => 'This field is required',
+            ],
+        );
+        $fileOriginalName = $request->file('profile')->getClientOriginalName();
+
+        $insertGallery = DB::table('gallery')->insert([
+            'image' => $fileOriginalName,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        if ($insertGallery) {
+            $request->profile->move('Images/gallery/', $fileOriginalName);
+            session()->flash('Success', 'Image added successfully');
+        } else {
+            session()->flash('Error in Inserting Image');
+        }
+        return redirect()->route('gallery.create');
+    }
+    public function gallery_edit($id)
+    {
+        $adminData = DB::table('admin')->get();
+        $data = DB::table('gallery')
+            ->where('id', $id)
+            ->first();
+        if ($data) {
+            return view('blueprint.edit_gallery', compact('data', 'adminData'));
+        } else {
+            session()->flash('Error', "$id not found");
+            return redirect()->route('gallery.create');
+        }
+    }
+    public function gallery_activate($id)
+    {
+        $ifGalleryIdExists = DB::table('gallery')
+            ->where('id', $id)
+            ->where('status', 'Inactive')
+            ->first();
+        if ($ifGalleryIdExists) {
+            $update = DB::table('gallery')
+                ->where('id', $id)
+                ->update(['status' => 'Active']);
+            $update ? session()->flash('Success', 'gallery status updated successfully') : session()->flash('Error', 'Error in updating status');
+        } else {
+            session()->flash('Error', "$id not found");
+        }
+        return redirect()->route('gallery.create');
+    }
+    public function gallery_deactivate($id)
+    {
+        $ifGalleryIdExists = DB::table('gallery')
+            ->where('id', $id)
+            ->where('status', 'Active')
+            ->first();
+        if ($ifGalleryIdExists) {
+            $update = DB::table('gallery')
+                ->where('id', $id)
+                ->update(['status' => 'Inactive']);
+            $update ? session()->flash('Success', 'gallery status updated successfully') : session()->flash('Error', 'Error in updating status');
+        } else {
+            session()->flash('Error', "$id not found");
+        }
+        return redirect()->route('gallery.create');
+    }
+    public function gallery_reactivate($id)
+    {
+        $ifGalleryIdExists = DB::table('gallery')
+            ->where('id', $id)
+            ->where('status', 'Deleted')
+            ->first();
+        if ($ifGalleryIdExists) {
+            $update = DB::table('gallery')
+                ->where('id', $id)
+                ->update(['status' => 'Active']);
+            $update ? session()->flash('Success', 'gallery status updated successfully') : session()->flash('Error', 'Error in updating status');
+        } else {
+            session()->flash('Error', "$id not found");
+        }
+        return redirect()->route('gallery.create');
+    }
+    public function gallery_delete($id)
+    {
+        $ifGalleryIdExists = DB::table('gallery')
+            ->where('id', $id)
+            ->first();
+        if ($ifGalleryIdExists) {
+            $update = DB::table('gallery')
+                ->where('id', $id)
+                ->update(['status' => 'Deleted']);
+            $update ? session()->flash('Success', 'gallery status updated successfully') : session()->flash('Error', 'Error in updating status');
+        } else {
+            session()->flash('Error', "$id not found");
+        }
+        return redirect()->route('gallery.create');
+    }
+    public function gallery_update(Request $request)
+    {
+        $request->validate(
+            [
+                'profile' => 'required|mimes:png,jpg,avif,webp',
+            ],
+            [
+                'profile.required' => 'Profile image cannot be empty',
+                'profile.mimes' => 'You can only upload png , jpg, avif , webp files',
+            ],
+        );
+        $fileOriginalName = $request->file('profile')->getClientOriginalName();
+        $filePath = 'Images/gallery/' . $request->profile;
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+
+        $updateGalleryQuery = DB::table('gallery')
+            ->where('id', $request->id)
+            ->update(['image' => $fileOriginalName]);
+        if ($updateGalleryQuery) {
+            $request->profile->move('Images/gallery/', $fileOriginalName);
+
+            Session::put('Success', 'gallery updated successfully');
+        } else {
+            Session::put('Error', 'Error in updating the gallery');
+        }
+        return redirect()->route('gallery.create');
     }
 }
