@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <form action="{{ route('gallery.store') }}" method="post" enctype="multipart/form-data">
-            @csrf   
+            @csrf
             <div class="col-lg-12 col-sm-12 col-md-12">
                 <label for="" class="form-label">Choose Image</label>
                 <input type="file" name="profile" id="" class="form-control">
