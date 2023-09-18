@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
@@ -24,7 +25,6 @@ Route::prefix('admin')->group(function () {
         ->middleware('Auth.Success');
 
     Route::post('admin_login_validate', [AdminController::class, 'admin_login_validate'])->name('admin.login.store');
-
 
     Route::middleware('Auth.Admin')->group(function () {
         Route::get('admin_dashboard', [AdminController::class, 'index'])->name('admin_dashboard');
@@ -83,3 +83,9 @@ Route::prefix('admin')->group(function () {
         Route::get('change_password_validate', [AdminController::class, 'admin_change_password_validate'])->name('admin.change.password.validate');
     });
 });
+Route::get('login', [LoginController::class, 'create'])->name('guest.login');
+Route::post('login-validate', [LoginController::class, 'loginStore'])->name('guest.login.validate');
+Route::get('register', [RegisterController::class, 'register'])->name('guest.register');
+Route::post('register-validate', [RegisterController::class, 'registerValidate'])->name('guest.register.validate');
+Route::get('activate/{email}/{token}', [RegisterController::class, 'activateAccount'])->name('guest.activate.account');
+Route::get('logout', [LoginController::class, 'logout'])->name('user.logout');

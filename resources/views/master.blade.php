@@ -46,35 +46,20 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#menu">Menu</a></li>
-                    <li><a href="#chefs">Chefs</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i
-                                class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{{ URL::to('/') }}/#hero">Home</a></li>
+                    <li><a href="{{ URL::to('/') }}/#about">About</a></li>
+                    <li><a href="{{ URL::to('/') }}/#menu">Menu</a></li>
+                    <li><a href="{{ URL::to('/') }}/#chefs">Chefs</a></li>
+                    <li><a href="{{ URL::to('/') }}/#gallery">Gallery</a></li>
+
+                    <li><a href="{{ URL::to('/') }}/#contact">Contact</a></li>
                 </ul>
             </nav><!-- .navbar -->
-
-            <a class="btn-book-a-table" href="#book-a-table">Login</a>
+            @if (session()->has('user_email') and session()->has('user_password'))
+                <a href="{{ route('user.logout') }}" class="btn-book-a-table">Logout</a>
+            @else
+                <a class="btn-book-a-table" href="{{ route('guest.login') }}">Login</a>
+            @endif
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -155,6 +140,8 @@
     <script src="{{ asset('assets/vendors/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('assets/vendors/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/php-email-form/validate.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
