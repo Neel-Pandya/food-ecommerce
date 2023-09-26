@@ -10,9 +10,6 @@ class UserController extends Controller
     //
     public function create()
     {
-        $itemData = Database::table('items')
-            ->where('item_status', 'Active')
-            ->get();
         $countUsers = Database::table('users')
             ->where('status', 'Active')
             ->count('id');
@@ -20,6 +17,11 @@ class UserController extends Controller
             ->where('item_status', 'Active')
             ->count('id');
         $galleryData = Database::table('gallery')->where('status', 'Active')->get();
-        return view('welcome', compact('itemData', 'countUsers', 'countItems', 'galleryData'));
+        return view('welcome', compact('countUsers', 'countItems', 'galleryData'));
+    }
+
+    public function cart_design()
+    {
+        return view('blueprint.cart');
     }
 }

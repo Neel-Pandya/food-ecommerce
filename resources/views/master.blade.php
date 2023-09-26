@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 
     <title>Food Ecommerce
     </title>
@@ -57,6 +60,10 @@
                     <li><a href="{{ URL::to('/') }}/#gallery">Gallery</a></li>
 
                     <li><a href="{{ URL::to('/') }}/#contact">Contact</a></li>
+                    @if(session()->has('user_email') and session()->has('user_password'))
+                        <li><a href="{{ route('user.cart') }}" class="{{ request()->routeIs('user.cart') ? 'active' : ''}}">Cart</a></li>
+                    @endif
+                    
                 </ul>
             </nav><!-- .navbar -->
             @if (session()->has('user_email') and session()->has('user_password'))
@@ -145,10 +152,14 @@
     <script src="{{ asset('assets/vendors/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/php-email-form/validate.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script src="{{ asset('js/sweetAlert.js') }}"></script>
+
+    @yield('scripts')
 
 
 </body>

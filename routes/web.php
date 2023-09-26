@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -100,3 +103,14 @@ Route::get('register', [RegisterController::class, 'register'])->name('guest.reg
 Route::post('register-validate', [RegisterController::class, 'registerValidate'])->name('guest.register.validate');
 Route::get('activate/{email}/{token}', [RegisterController::class, 'activateAccount'])->name('guest.activate.account');
 Route::get('logout', [LoginController::class, 'logout'])->name('user.logout');
+Route::get('getMenu', [MenuController::class, 'getMenu']);
+Route::get('get-gallery', [MenuController::class, 'get_gallery']);
+
+Route::get('cart', [UserController::class, 'cart_design'])->name('user.cart');
+Route::post('add-to-cart', [CartController::class, 'create'])->name('user.add.to.cart');
+Route::get('get-cart-data', [CartController::class, 'getCartData'])->name('user.get.cart.data');
+Route::post('updateQuantityEndpoint', [CartController::class, 'updateQuantity'])->name('user.update.quantity');
+Route::get('delete/{id}', [CartController::class, 'delete']);
+
+Route::post('make-purchase', [PurchaseController::class, 'store']);
+Route::get('delete/{id}', [PurchaseController::class, 'deleteCartItem']);
