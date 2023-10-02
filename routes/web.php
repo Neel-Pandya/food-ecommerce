@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,7 @@ Route::prefix('admin')->group(function () {
             Route::get('delete/{item_name}', [AdminController::class, 'products_delete'])->name('products.delete');
             Route::get('edit/{item_name}', [AdminController::class, 'products_edit'])->name('products.edit');
             Route::post('update', [AdminController::class, 'products_update'])->name('products.update');
+            Route::get('purchased', [AdminController::class, 'products_purchased'])->name('products.purchased');
         });
 
         Route::get('category', [AdminController::class, 'categoryShow'])->name('category');
@@ -97,20 +99,28 @@ Route::prefix('admin')->group(function () {
         Route::get('change_password_validate', [AdminController::class, 'admin_change_password_validate'])->name('admin.change.password.validate');
     });
 });
-Route::get('login', [LoginController::class, 'create'])->name('guest.login');
+Route::get('login', [LoginController::class, 'create'])->name('guest.login')->middleware('User.Success');
 Route::post('login-validate', [LoginController::class, 'loginStore'])->name('guest.login.validate');
 Route::get('register', [RegisterController::class, 'register'])->name('guest.register');
 Route::post('register-validate', [RegisterController::class, 'registerValidate'])->name('guest.register.validate');
 Route::get('activate/{email}/{token}', [RegisterController::class, 'activateAccount'])->name('guest.activate.account');
-Route::get('logout', [LoginController::class, 'logout'])->name('user.logout');
 Route::get('getMenu', [MenuController::class, 'getMenu']);
 Route::get('get-gallery', [MenuController::class, 'get_gallery']);
 
-Route::get('cart', [UserController::class, 'cart_design'])->name('user.cart');
-Route::post('add-to-cart', [CartController::class, 'create'])->name('user.add.to.cart');
-Route::get('get-cart-data', [CartController::class, 'getCartData'])->name('user.get.cart.data');
-Route::post('updateQuantityEndpoint', [CartController::class, 'updateQuantity'])->name('user.update.quantity');
-Route::get('delete/{id}', [CartController::class, 'delete']);
+Route::middleware('User.Auth')->group(function () {
+    Route::get('logout', [LoginController::class, 'logout'])->name('user.logout');
+    Route::get('cart', [UserController::class, 'cart_design'])->name('user.cart');
+    Route::post('add-to-cart', [CartController::class, 'create'])->name('user.add.to.cart');
+    Route::get('get-cart-data', [CartController::class, 'getCartData'])->name('user.get.cart.data');
+    Route::post('updateQuantityEndpoint', [CartController::class, 'updateQuantity'])->name('user.update.quantity');
+    Route::get('delete/{id}', [CartController::class, 'delete']);
 
-Route::post('make-purchase', [PurchaseController::class, 'store']);
-Route::get('delete/{id}', [PurchaseController::class, 'deleteCartItem']);
+    Route::post('make-purchase', [PurchaseController::class, 'store']);
+    Route::get('delete/{id}', [PurchaseController::class, 'deleteCartItem']);
+
+    Route::get('edit', [ProfileController::class, 'edit'])->name('user.edit.profile');
+    Route::get('get-edit-data', [ProfileController::class, 'getEditData']);
+    Route::post('update', [ProfileController::class, 'update']);
+    Route::view('change-password', 'blueprint.change_password')->name('user.change.password');
+    Route::post('update-password', [ProfileController::class, 'update_password']);
+});

@@ -9,6 +9,7 @@ class PurchaseController extends Controller
 {
     //
 
+    public $purchaseCart;
     public function store(Request $request)
     {
         $userEmail = session('user_email');
@@ -26,7 +27,7 @@ class PurchaseController extends Controller
 
             $total = $product_price * $quantity;
 
-            DB::table('purchased_item')->insertOrIgnore([
+            $this->purchaseCart = DB::table('purchased_item')->insertOrIgnore([
                 'email' => $userEmail,
                 'product_id' => $cart->product_id,
                 'product_name' => $cart->product_name,
@@ -40,7 +41,7 @@ class PurchaseController extends Controller
         }
         DB::table('cart')->where('user_email', $userEmail)->delete();
 
-        return response()->json(['status' => 'success', 'message' => 'Purchased Successfull']);
+        return $this->purchaseCart ? response()->json(['status' => 'success', 'message' => 'Purchased Successfull']) : response()->json([['status' => 'failed', 'message' => 'No cart items are selected']]);
     }
     public function deleteCartItem($itemId)
     {

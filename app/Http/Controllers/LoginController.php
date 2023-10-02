@@ -37,8 +37,9 @@ class LoginController extends Controller
 
         $ifAccountIsActivated = DB::table('users')
             ->where('email', $request->email)
+            ->where('password', $request->password)
             ->first();
-        if ($ifAccountIsActivated and Hash::check($request->password, $ifAccountIsActivated->password)) {
+        if ($ifAccountIsActivated) {
             if ($ifAccountIsActivated->status == 'Active') {
                 session()->put('user_email', $request->email);
                 session()->put('user_password', $request->password);

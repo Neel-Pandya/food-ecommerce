@@ -206,9 +206,12 @@
                         sweetAlert('success', response.message)
                         fetchCartDetails()
                     }
-                    else {
+                    else{
                         sweetAlert('error', response.message)
                     }
+                }, 
+                error: function (err){
+                    console.log(err)
                 }
             });
         });

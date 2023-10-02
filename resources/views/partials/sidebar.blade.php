@@ -41,23 +41,14 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('products.available') }}">Available Items
                         </a>
                     </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('products.purchased') }}">Purchased Items
+                        </a>
+                    </li>
 
                 </ul>
             </div>
         </li>
-        <li class="nav-item {{ request()->routeIs('services.available') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('services.available') }}">
-                <span class="menu-title">Services </span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-            </a>
-        </li>
 
-        <li class="nav-item {{ request()->routeIs('service.purchased') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('service.purchased') }}">
-                <span class="menu-title">Purchased Service </span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-            </a>
-        </li>
 
         <li class="nav-item {{ request()->routeIs('category') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('category') }}">
@@ -68,7 +59,8 @@
 
 
         <li class="nav-item">
-            <a href="{{ route('admin.change.password') }}" class="nav-link"><span class="menu-title">Change Password</span>
+            <a href="{{ route('admin.change.password') }}" class="nav-link"><span class="menu-title">Change
+                    Password</span>
                 <i class="mdi mdi-key menu-icon"></i></a>
         </li>
 
@@ -76,7 +68,7 @@
             <a href="{{ route('gallery.create') }}" class="nav-link"><span class="menu title">Gallery</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
-</li>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}">

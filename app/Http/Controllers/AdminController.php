@@ -452,6 +452,13 @@ class AdminController extends Controller
         }
     }
 
+    public function products_purchased()
+    {
+        $adminData = DB::table('admin')->get();
+        $getPurchasedData = DB::table('purchased_item')->get();
+        return view('blueprint.purchased_product', compact('adminData', 'getPurchasedData'));
+    }
+
     public function products_update(Request $request)
     {
         $request->validate(
