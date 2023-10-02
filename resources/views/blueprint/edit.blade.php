@@ -100,27 +100,27 @@
                             contentType: false,
                             processData: false,
                             success: function (response) {
-                                if(response.status == 'validation'){
+                                if (response.status == 'validation') {
                                     $('.validation-errors').addClass('alert');
                                     $(".validation-errors").html('')
-                                    $.each(response.error, function (indexInArray, valueOfElement) { 
-                                         $('.validation-errors').append(
+                                    $.each(response.error, function (indexInArray, valueOfElement) {
+                                        $('.validation-errors').append(
                                             `<li style='list-style:none;'> ${valueOfElement} </li>`
-                                         );
+                                        );
                                     });
                                 }
-                                else{
+                                else {
                                     $('.validation-errors').html("")
                                     $('.validation-errors').removeClass('alert');
                                 }
 
-                                if(response.status == 'success'){
+                                if (response.status == 'success') {
                                     sweetAlert('success', response.message)
                                     editProfile()
                                 }
-                                
-                            }, 
-                            error: function (err){
+
+                            },
+                            error: function (err) {
                                 console.log(err)
                             }
                         });
