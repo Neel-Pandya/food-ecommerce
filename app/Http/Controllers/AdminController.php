@@ -22,7 +22,12 @@ class AdminController extends Controller
     public function index()
     {
         $adminData = DB::table('admin')->get();
-        return view('index', compact('adminData'));
+        $totalItem = DB::table('items')->where('item_status', 'Active')->count();
+        $totalUsers = DB::table('users')->count();
+        $activeUsers = DB::table('users')->where('status', 'Active')->count();
+        $totalCategory = DB::table('category')->where('category_status', 'Active')->count();
+
+        return view('index', compact('adminData', 'totalItem', 'totalUsers', 'activeUsers', 'totalCategory'));
     }
 
     public function user()

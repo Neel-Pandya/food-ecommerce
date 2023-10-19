@@ -76,7 +76,7 @@ class ProfileController extends Controller
             return response()->json(['status' => 'validation', 'error' => $validator->messages()]);
         }
 
-        $ifOldPasswordMatched = DB::table('users')->where('email', session()->get('user_email'))->where('password', session()->get('user_password'))->first();
+        $ifOldPasswordMatched = DB::table('users')->where('email', session()->get('user_email'))->where('password', $request->old_pass)->first();
         if ($ifOldPasswordMatched) {
 
             $update = DB::table('users')->where('email', session()->get('user_email'))->update(['password' => $request->new_pass]);

@@ -51,13 +51,11 @@ class RegisterController extends Controller
             'address.required' => 'Address cannot be empty',
             'profile.mimes' => 'You can only upload jpg, jpeg, png, avif, or webp files',
         ];
-        $token = $this->generateRandomToken();
-        session()->put('token', $token);
         $validator = Validator::make($request->all(), $rules, $customMessages);
         $mailData = [
             'title' => 'Registration Successfull',
             'body' => "Hello $request->name Your Account is Created Successfully",
-            'token' => $token,
+
             'email' => $request->email,
         ];
 
@@ -106,18 +104,12 @@ class RegisterController extends Controller
 
         return redirect()->route('guest.register');
     }
-    public function activateAccount($email, $token)
+    public function activateAccount($email)
     {
         $ifUserExists = DB::table('users')->where('email', $email)->where('status', 'Inactive')->count();
         if ($ifUserExists == 1) {
-            $isTokenValid = session()->get('token');
-            if ($token == $isTokenValid) {
-                $update = DB::table('users')->where('email', $email)->update(['status' => 'Active']);
-                $update ? session()->flash('Success', 'Account Activated Successfully') : session()->flash('Error', 'Error in Account Activation');
-                return redirect()->route('guest.login');
-            } else {
-                session()->flash('Error', 'Invalid Token');
-            }
+            $activeUser =  DB::table('users')->where('email', $email)->where('status', 'Inactive')->update(['status' => 'Active']);
+            $activeUser ? session()->flash('Success', "Account activated successfully") : session()->flash('Error', 'Error in creating the account');
         } else {
             session()->flash('Error', "email $email does not exists or The Account is already activated");
         }

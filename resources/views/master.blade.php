@@ -51,10 +51,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a href="{{ URL::to('/') }}/#hero">Home</a></li>
-                    @if (session()->has('user_email') and session()->has('user_password'))
-                    @else
-                    <li><a href="{{ URL::to('/') }}/#about">About</a></li>
-                    @endif
+
                     <li><a href="{{ URL::to('/') }}/#menu">Menu</a></li>
                     <li><a href="{{ URL::to('/') }}/#chefs">Chefs</a></li>
                     <li><a href="{{ URL::to('/') }}/#gallery">Gallery</a></li>
@@ -65,6 +62,10 @@
                             class="{{ request()->routeIs('user.cart') ? 'active' : ''}}">Cart</a></li>
                     <li><a href="{{ route('user.edit.profile') }}"
                             class="{{ request()->routeIs('user.edit.profile')  ? 'active' : ''}}">Profile</a></li>
+
+                    <li><a href="{{ route('user.purchase.item') }}"
+                            class="{{ request()->routeIs('user.purchase.item')  ? 'active' : ''}}">Purchased Item</a>
+                    </li>
                     <li><a href="{{ route('user.change.password') }}"
                             class="{{ request()->routeIs('user.change.password') ? 'active' : '' }}">Change
                             Password</a></li>

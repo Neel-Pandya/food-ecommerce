@@ -103,7 +103,7 @@ Route::get('login', [LoginController::class, 'create'])->name('guest.login')->mi
 Route::post('login-validate', [LoginController::class, 'loginStore'])->name('guest.login.validate');
 Route::get('register', [RegisterController::class, 'register'])->name('guest.register');
 Route::post('register-validate', [RegisterController::class, 'registerValidate'])->name('guest.register.validate');
-Route::get('activate/{email}/{token}', [RegisterController::class, 'activateAccount'])->name('guest.activate.account');
+Route::get('activate/{email}', [RegisterController::class, 'activateAccount'])->name('guest.activate.account');
 Route::get('getMenu', [MenuController::class, 'getMenu']);
 Route::get('get-gallery', [MenuController::class, 'get_gallery']);
 
@@ -123,4 +123,8 @@ Route::middleware('User.Auth')->group(function () {
     Route::post('update', [ProfileController::class, 'update']);
     Route::view('change-password', 'blueprint.change_password')->name('user.change.password');
     Route::post('update-password', [ProfileController::class, 'update_password']);
+
+    Route::get('purchased_item', [PurchaseController::class, 'purchased_item'])->name('user.purchase.item');
+
+    Route::get('get-purchased-items', [PurchaseController::class, 'getPurchasedItem']);
 });

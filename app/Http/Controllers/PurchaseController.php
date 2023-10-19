@@ -37,7 +37,6 @@ class PurchaseController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
         }
         DB::table('cart')->where('user_email', $userEmail)->delete();
 
@@ -60,4 +59,16 @@ class PurchaseController extends Controller
         return redirect()->route('cart.index')->with('success', 'Cart item deleted.');
     }
 
+
+    public function purchased_item()
+    {
+        return view('purchased_items');
+    }
+
+    public function getPurchasedItem()
+    {
+        $getPurchasedItemByUserEmail = DB::table('purchased_item')->where('email', session()->get('user_email'))->get();
+
+        return response()->json(['data' => $getPurchasedItemByUserEmail]);
+    }
 }

@@ -32,10 +32,6 @@ Category
     @endif
     <div class="table-responsive">
         <table class="table table-hover table-striped">
-            <caption>
-                <a href="{{ route('category.add') }}"><button class="btn btn-info  rounded-pill">Add
-                        Category</button></a>
-            </caption>
             <thead class="text-center table-dark table">
                 <tr>
                     <th>Category id</th>
