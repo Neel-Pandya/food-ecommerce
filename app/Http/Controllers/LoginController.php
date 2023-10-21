@@ -20,7 +20,7 @@ class LoginController extends Controller
             $request->all(),
             [
                 'email' => 'required',
-                'password' => 'required',
+                'password' => 'required|min:5|max:10',
             ],
             [
                 'email.required' => 'Email Cannot be empty',

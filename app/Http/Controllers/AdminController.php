@@ -750,6 +750,13 @@ class AdminController extends Controller
             'new_pass' => 'required|confirmed',
             'new_pass_confirmation' => 'required',
         ]);
+
+        $updatePassword = DB::table('admin')->where('admin_email', session()->get('admin_email'))->where('admin_password', $request->old_pass)->update([
+            'admin_password' => $request->new_pass,
+        ]);
+
+        $updatePassword ? session()->flash('Success', 'Password updated successfully') : session()->flash('Error', 'Error in updating the password');
+        return redirect()->route('admin.change.password');
     }
 
     public function gallery_create()

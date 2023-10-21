@@ -96,7 +96,7 @@ Route::prefix('admin')->group(function () {
         Route::get('edit', [AdminController::class, 'admin_edit'])->name('admin.edit');
         Route::post('update', [AdminController::class, 'admin_update'])->name('admin.update');
         Route::get('change_password', [AdminController::class, 'admin_change_password'])->name('admin.change.password');
-        Route::get('change_password_validate', [AdminController::class, 'admin_change_password_validate'])->name('admin.change.password.validate');
+        Route::post('change_password_validate', [AdminController::class, 'admin_change_password_validate'])->name('admin.change.password.validate');
     });
 });
 Route::get('login', [LoginController::class, 'create'])->name('guest.login')->middleware('User.Success');
